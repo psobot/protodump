@@ -119,8 +119,6 @@ def to_proto_file(fds: descriptor_pb2.FileDescriptorSet) -> str:
         submessages = f.message_type if hasattr(f, "message_type") else f.nested_type
 
         for message in submessages:
-            # if message.name == "ContainedObjectsCommandArchive":
-            #     breakpoint()
             lines.append(prefix + f"message {message.name} " + "{")
 
             generate_enum_lines(message, lines, indent + 1)
@@ -232,6 +230,7 @@ def read_until_null_tag(data):
         if new_position == -1:
             return position
         position = new_position
+    return position
 
 
 def extract_proto_definitions_from_file(
@@ -351,7 +350,7 @@ def main(argv: Optional[list[str]] = None):
     proto_files = detect_all_proto_files_from_paths(all_filenames)
     for proto_file in tqdm(proto_files):
         Path(args.output_path).mkdir(parents=True, exist_ok=True)
-        with open(Path(args.output_path) / proto_file.path, "w") as f:
+        with open(Path(args.output_path) / proto_file.name, "w") as f:
             source = proto_file.source
             if source:
                 f.write(source)
