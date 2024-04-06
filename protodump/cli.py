@@ -11,9 +11,8 @@ Inspired by Sean Patrick O'Brien (@obriensp)'s 2013 "proto-dump": https://github
 
 from pathlib import Path
 from tqdm import tqdm
-from typing import List, Iterable
+from typing import List, Iterable, BinaryIO, Union
 from collections import defaultdict
-from typing import BinaryIO
 
 from google.protobuf.internal.decoder import _DecodeVarint, SkipField  # type: ignore
 from google.protobuf import descriptor_pb2  # type: ignore
@@ -236,7 +235,7 @@ def read_until_null_tag(data):
 
 
 def extract_proto_definitions_from_file(
-    filename_or_file_like: str | Path | BinaryIO,
+    filename_or_file_like: Union[str, Path, BinaryIO],
     descriptor_pool: DescriptorPool,
 ) -> Iterable[ProtoFile]:
     """
@@ -362,7 +361,7 @@ def main(argv: list[str] | None = None):
 
 
 def detect_all_proto_files_from_paths(
-    files: Iterable[str | Path | BinaryIO],
+    files: Iterable[Union[str, Path, BinaryIO]],
 ) -> set[ProtoFile]:
     GLOBAL_DESCRIPTOR_POOL = DescriptorPool()
     # Do this entire thing twice, as the order of the found descriptors
