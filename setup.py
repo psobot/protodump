@@ -32,15 +32,13 @@ def read_requirements(path):
 setup(
     name="protodump",
     version=read("protodump", "VERSION"),
-    description="Awesome protodump created by psobot",
+    description="Extract protobuf definitions rom binary files.",
     url="https://github.com/psobot/protodump/",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="psobot",
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
-    entry_points={
-        "console_scripts": ["protodump = protodump.__main__:main"]
-    },
+    entry_points={"console_scripts": ["protodump = protodump.__main__:main"]},
     extras_require={"test": read_requirements("requirements-test.txt")},
 )
