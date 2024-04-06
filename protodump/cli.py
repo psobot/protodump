@@ -11,7 +11,7 @@ Inspired by Sean Patrick O'Brien (@obriensp)'s 2013 "proto-dump": https://github
 
 from pathlib import Path
 from tqdm import tqdm
-from typing import List, Iterable, BinaryIO, Union
+from typing import List, Iterable, BinaryIO, Union, Optional
 from collections import defaultdict
 
 from google.protobuf.internal.decoder import _DecodeVarint, SkipField  # type: ignore
@@ -323,7 +323,7 @@ def find_missing_dependencies(all_files, source_file):
     return to_return
 
 
-def main(argv: list[str] | None = None):
+def main(argv: Optional[list[str]] = None):
     import argparse
 
     parser = argparse.ArgumentParser(
